@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import SeasonDisplay from './SeasonDisplay';
+import LoadingSpinner from './LoadingSpinner';
 
 class App extends React.Component {
     state = {
@@ -15,14 +16,18 @@ class App extends React.Component {
         );
     };
 
-    render() {
+    renderContent() {
         if (this.state.errMessage && !this.state.lat) {
             return (<div><h1>Error: {this.state.errMessage}</h1></div>);
         };
         if (!this.state.errMessage && this.state.lat) {
             return <SeasonDisplay lat={this.state.lat} />
         }
-        return (<div><h3>Loading</h3></div>)
+        return <LoadingSpinner message="Awaiting Target Lock" />
+    };
+
+    render() {
+        return <div>{this.renderContent()}</div>
     };
 };
 
